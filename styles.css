@@ -1,0 +1,217 @@
+/* ===================================
+   ALARIS AI — Clean Flow + Polished UI
+   (Drop-in replacement for styles.css)
+   =================================== */
+
+/* Font (optional): safe to keep if you like Inter) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+  /* Palette */
+  --bg:#0b1016;
+  --panel:#0c1420;
+  --card:#0f1826;
+  --text:#e9eef6;
+  --muted:#a8b5c6;
+  --brand:#38bdf8;
+  --accent:#34d399;
+  --chip:#162433;
+  --border:#1b2a3a;
+  --ring:#22d3ee;
+
+  /* Type & rhythm */
+  --leading:1.6;
+  --radius:18px;
+  --shadow:0 10px 26px rgba(0,0,0,.28);
+  --shadow-hover:0 14px 34px rgba(0,0,0,.36);
+
+  /* Section rhythm */
+  --space-0: 6px;
+  --space-1: 12px;
+  --space-2: 20px;
+  --space-3: 28px;
+  --space-4: 40px;
+  --space-5: 56px;
+  --space-6: 84px;
+}
+
+html,body{height:100%}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  line-height: var(--leading);
+  color: var(--text);
+  background:
+    radial-gradient(1100px 520px at 8% -10%, rgba(56,189,248,.12), transparent),
+    radial-gradient(1000px 520px at 108% -16%, rgba(52,211,153,.10), transparent),
+    var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a{color:inherit; text-decoration:none}
+a:hover{opacity:.92}
+img{max-width:100%; height:auto; display:block}
+
+.narrow{max-width:900px}
+.lede{color:var(--muted); max-width:72ch}
+
+/* Skip link (a11y) */
+.skip-link{
+  position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
+}
+.skip-link:focus{
+  position:fixed; left:16px; top:16px; z-index:1050;
+  background:#0b1320; color:#fff; padding:8px 12px; border-radius:10px;
+  outline:2px solid var(--ring);
+}
+
+/* Navbar */
+.backdrop-blur{backdrop-filter:saturate(140%) blur(8px)}
+.navbar .nav-link{opacity:.9; transition:opacity .2s ease, color .2s ease}
+.navbar .nav-link:hover,.navbar .nav-link:focus{opacity:1; color:#fff}
+
+/* Headings */
+h1,h2,h3,h4{letter-spacing:.2px}
+h1{font-weight:800}
+h3{font-weight:800; margin-bottom:.4rem}
+h3::after{
+  content:""; display:block; width:64px; height:3px; margin-top:.6rem;
+  background:linear-gradient(90deg, var(--brand), var(--accent)); border-radius:3px;
+}
+
+/* Sections — consistent vertical flow */
+.section{scroll-margin-top:90px; padding-block:var(--space-5)}
+.section + .section{margin-top:var(--space-6)}
+.band{position:relative; isolation:isolate}
+.band::before{
+  content:""; position:absolute; inset:-36px 0; z-index:-1; pointer-events:none;
+  background:linear-gradient(180deg,
+    rgba(56,189,248,.10) 0%,
+    rgba(52,211,153,.08) 36%,
+    rgba(0,0,0,0) 86%);
+  filter:blur(28px);
+}
+/* Alternate bands for gentle cadence */
+.band:nth-of-type(even)::before{
+  background:linear-gradient(180deg,
+    rgba(52,211,153,.09) 0%,
+    rgba(56,189,248,.08) 36%,
+    rgba(0,0,0,0) 86%);
+}
+
+/* Hero */
+.hero{
+  background: radial-gradient(820px 420px at 28% 0%, rgba(56,189,248,.12), transparent);
+}
+
+/* ---------- Controls row tweaks ---------- */
+.controls .form-label{color:var(--muted); margin-bottom: var(--space-0)}
+.form-control,.form-select{
+  background-color:#0f1724; border-color:#213246; color:var(--text);
+}
+.form-control:focus,.form-select:focus{
+  border-color:#2a4762; box-shadow:0 0 0 0.15rem rgba(34,211,238,.2);
+}
+
+/* ---------- Group headings ---------- */
+#groups > section > h4{
+  font-weight:700; margin: 2px 0 14px;
+}
+#groups > section > h4::before{
+  content:""; display:inline-block; width:8px; height:8px; margin-right:.55rem;
+  border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, var(--brand), var(--accent));
+}
+
+/* ---------- Team cards ---------- */
+.person-card{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)),
+    var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:12px;
+  height:100%;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  cursor:pointer;
+}
+.person-card:hover{
+  transform: translateY(-3px);
+  border-color: color-mix(in oklab, var(--brand) 55%, var(--border));
+  box-shadow: var(--shadow-hover);
+}
+.person-card:focus-visible{outline:2px solid var(--ring); outline-offset:2px}
+.person-card .avatar-wrap{display:flex; justify-content:center}
+.person-card .avatar{
+  width:124px; height:124px; border-radius:50%;
+  object-fit:cover; background:#0f1117; border:2px solid #1f3347;
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+}
+.person-card .name{font-weight:800; font-size:1.06rem; margin:0; text-align:center}
+.person-card .role{color:var(--muted); margin:0; text-align:center}
+
+/* Card blurb: tidy 2 lines for perfect grid */
+.person-card .blurb{
+  color: var(--muted); font-size:.94rem; margin:0;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+  overflow:hidden; min-height:2.8em;
+}
+
+/* Tag chips */
+.person-card .tags{display:flex; flex-wrap:wrap; gap:8px; justify-content:center}
+.person-card .tag{
+  padding:4px 10px; font-size:.78rem; color:var(--muted);
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)), var(--chip);
+  border:1px solid var(--border); border-radius:999px;
+}
+
+/* Links */
+.person-card .links{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+.person-card .links a{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:6px 10px; border:1px solid var(--border); border-radius:12px;
+  color:var(--text); background:rgba(255,255,255,.02);
+}
+.person-card .links a:hover{border-color:var(--brand); background:rgba(255,255,255,.04)}
+
+/* ---------- Modal (photo keeps aspect ratio) ---------- */
+.modal-content{
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)), var(--panel) !important;
+  border:1px solid var(--border) !important;
+}
+.modal-header .modal-title{font-weight:800}
+.modal-avatar{
+  display:block; max-width:200px; max-height:200px;
+  width:auto; height:auto; object-fit:contain;  /* keep full photo */
+  border-radius:12px; border:1px solid var(--border); background:#0f1117;
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
+}
+@media (max-width:576px){ .modal-avatar{ max-width:140px; max-height:140px } }
+
+/* ---------- Carousels ---------- */
+.carousel-caption{
+  background: linear-gradient(180deg, rgba(0,0,0,.38), rgba(0,0,0,.12));
+  padding:.35rem .55rem; border-radius:10px;
+}
+
+/* Buttons (Bootstrap overrides) */
+.btn-primary{
+  --bs-btn-bg: linear-gradient(135deg, var(--brand), var(--accent));
+  --bs-btn-border-color: transparent;
+  --bs-btn-hover-bg: linear-gradient(135deg, var(--accent), var(--brand));
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-active-bg: linear-gradient(135deg, var(--accent), var(--brand));
+}
+.btn-outline-light{
+  --bs-btn-color:#eaf2fb; --bs-btn-border-color:#5b6a7c;
+  --bs-btn-hover-bg:rgba(255,255,255,.06); --bs-btn-hover-border-color:#9fb2cb;
+}
+
+/* Footer & empty state */
+.site-footer{color:var(--muted)}
+.empty{color:var(--muted); text-align:center; margin:var(--space-3) 0}
