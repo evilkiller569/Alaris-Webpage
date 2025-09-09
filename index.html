@@ -3,36 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ALARIS AI — Team</title>
-  <meta name="description" content="Meet the ALARIS AI project team." />
+  <title>Alaris — Team</title>
   <meta name="theme-color" content="#0c1116">
-  <meta property="og:title" content="ALARIS AI — Team">
-  <meta property="og:description" content="Meet the ALARIS AI team, explore subteams, timeline, and demos.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/logo.png">
+  <!-- Bootstrap + Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Fonts (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Site styles -->
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="assets/logo.png">
 </head>
 <body>
   <a class="skip-link" href="#team">Skip to content</a>
 
+  <!-- NAV -->
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-transparent border-bottom border-dark-subtle backdrop-blur">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2" href="#top">
-        <img src="assets/logo.png" alt="ALARIS AI logo" width="28" height="28" class="rounded">
-        <span class="fw-bold">ALARIS AI</span>
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#home">
+        <img src="assets/logo.png" alt="Alaris logo" width="28" height="28" class="rounded">
+        <span class="fw-bold">Alaris</span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navMain">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#mission">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-          <li class="nav-item"><a class="nav-link" href="#mission">Mission</a></li>
-          <li class="nav-item"><a class="nav-link" href="#platform">Platform</a></li>
-          <li class="nav-item"><a class="nav-link" href="#subteams">Subteams</a></li>
-          <li class="nav-item"><a class="nav-link" href="#carousels">Carousels</a></li>
+          <li class="nav-item"><a class="nav-link" href="#project">Project</a></li>
           <li class="nav-item"><a class="nav-link" href="#timeline">Timeline</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
@@ -40,172 +42,56 @@
     </div>
   </nav>
 
-  <header class="hero border-bottom border-dark-subtle">
-    <div class="container py-5">
-      <h1 class="display-5 fw-bold">Meet the ALARIS AI team</h1>
-      <p class="lead text-muted mb-4">Search, filter and explore our leads and members. Click a card to read a short bio, or open it for details.</p>
+  <!-- HERO -->
+  <header id="home" class="hero border-bottom border-dark-subtle fit-screen">
+    <div class="container-xl py-5 hero-glass">
+      <span class="eyebrow">Welcome</span>
+      <h1 class="display-5 fw-bold">Welcome to ALARIS</h1>
+      <p class="lead text-muted mb-4 prose">
+        An early, meaningful Biomedical AI detection system from everyday biosignals — allowing you to act
+        <em>before</em> small issues become big problems.
+      </p>
       <div class="d-flex gap-2 flex-wrap">
-        <a class="btn btn-primary" href="#team">Browse the team</a>
-        <a class="btn btn-outline-light" href="#platform">What is ALARIS AI?</a>
+        <a class="btn btn-primary" href="#team">Meet the team</a>
+        <a class="btn btn-outline-light" href="#project">See the project</a>
+      </div>
+
+      <!-- quick stats -->
+      <div class="stats-strip mt-4">
+        <div class="stat"><div class="k">3</div><div class="l">Subteams</div></div>
+        <div class="stat"><div class="k">10+</div><div class="l">Active members</div></div>
+        <div class="stat"><div class="k">Wkly</div><div class="l">Checkpoints</div></div>
       </div>
     </div>
   </header>
 
   <main id="main">
-    <section id="mission" class="section band">
-      <div class="container narrow">
-        <h3 class="mb-3">Mission</h3>
-        <p class="lede">
-          ALARIS AI aims to spot <strong>early, meaningful changes in wellness</strong> using everyday biosignals.
-          We combine a low-cost wearable, privacy-respecting software, and transparent AI so people can act
-          <em>before</em> small issues become big problems.
-        </p>
-        <ul>
-          <li><strong>Safety first:</strong> decisions favor human oversight and clinical guidance.</li>
-          <li><strong>Evidence driven:</strong> models are evaluated on real-world, annotated data.</li>
-          <li><strong>Practical:</strong> the experience should be simple, helpful, and low-friction.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="platform" class="section band">
-      <div class="container narrow">
-        <h3 class="mb-3">What is ALARIS AI?</h3>
-        <p class="lede">
-          A holistic platform built from three pieces that work together: a wearable sensor, a mobile app, and
-          an analytics layer that turns signals into <strong>clear, actionable alerts</strong>.
-        </p>
-        <ul>
-          <li><strong>Signals:</strong> respiratory rate, heart rate &amp; variability, temperature, movement, and sleep patterns.</li>
-          <li><strong>Pipeline:</strong> ingest → clean → feature → model → evaluate → explain.</li>
-          <li><strong>Outcomes:</strong> weekly trends, “what changed and why,” and sensible next steps.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="subteams" class="section band">
-      <div class="container narrow">
-        <h3 class="mb-3">Subteams</h3>
-        <div class="mb-4">
-          <h4>Biology</h4>
-          <p class="lede">Grounds the project in clinical reality and defines what “good” looks like.</p>
-          <ul>
-            <li>Specify use-cases & success metrics; document assumptions and risks.</li>
-            <li>Design ethical collection efforts and labeling rubric for model training.</li>
-            <li>Review weekly results; write accessible summaries backed by sources.</li>
-          </ul>
+    <!-- ABOUT -->
+    <section id="mission" class="section band flow-lg fit-screen">
+      <div class="container-narrow">
+        <span class="eyebrow">About</span>
+        <h3 class="title">Our mission</h3>
+        <hr class="divider">
+        <div class="prose">
+          <p>Alaris aims to spot <strong>early, meaningful changes in wellness</strong> using everyday biosignals. We combine a low-cost wearable, privacy-respecting software, and transparent AI so people can act <em>before</em> small issues become big problems.</p>
         </div>
-        <div class="mb-4">
-          <h4>Hardware / Integration</h4>
-          <p class="lede">Turns parts into a reliable device and makes sure data flows end-to-end.</p>
-          <ul>
-            <li>Bring up Raspberry Pi & sensors; budget-aware enclosure and power.</li>
-            <li>Build a simple, secure data path from device → app → backend.</li>
-            <li>Stress test; document wiring, BOM, and assembly checklist.</li>
-          </ul>
-        </div>
-        <div class="mb-2">
-          <h4>Coding</h4>
-          <p class="lede">Owns the data pipeline, models, and the simple app surface.</p>
-          <ul>
-            <li>ETL: schema, cleaning rules, and feature computation.</li>
-            <li>Model: baseline → ablations → tuned candidate; add explanations where possible.</li>
-            <li>Integration: small UI with trends & alerts; metrics dashboard for the team.</li>
-          </ul>
+        <div class="info-grid mt-3">
+          <div class="info-card"><h5><i class="bi bi-shield-check"></i> Safety first</h5><p>Human oversight, clinical input.</p></div>
+          <div class="info-card"><h5><i class="bi bi-graph-up-arrow"></i> Evidence-driven</h5><p>Real-world annotated data.</p></div>
+          <div class="info-card"><h5><i class="bi bi-lightning-charge"></i> Practical</h5><p>Simple, low-friction experience.</p></div>
         </div>
       </div>
     </section>
 
-    <section id="carousels" class="section band">
+    <!-- TEAM (classic layout) -->
+    <section id="team" class="section band flow-xxl fit-screen" aria-label="Team directory">
       <div class="container">
-        <h3 class="mb-3">Autoplaying Carousels</h3>
-        <p class="lede">Quick peeks at recent work from each subteam. These auto-advance and pause on hover.</p>
+        <span class="eyebrow">Team</span>
+        <h3 class="title">Meet the ALARIS Team</h3>
+        <p class="text-muted mb-3">Leads, co-founders, engineering, bioscience &amp; hardware</p>
+        <hr class="divider">
 
-        <div class="row g-4">
-          <div class="col-12 col-lg-4">
-            <div class="card bg-transparent border border-dark-subtle rounded-4 overflow-hidden">
-              <div class="card-header">Biology</div>
-              <div id="bioCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="https://picsum.photos/seed/bio1/800/500" class="d-block w-100" alt="Biology slide 1">
-                    <div class="carousel-caption d-none d-md-block"><p class="small">Annotation rubric v0.2</p></div>
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://picsum.photos/seed/bio2/800/500" class="d-block w-100" alt="Biology slide 2">
-                    <div class="carousel-caption d-none d-md-block"><p class="small">Pilot data round 1</p></div>
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://picsum.photos/seed/bio3/800/500" class="d-block w-100" alt="Biology slide 3">
-                    <div class="carousel-caption d-none d-md-block"><p class="small">QA checks & baselines</p></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-lg-4">
-            <div class="card bg-transparent border border-dark-subtle rounded-4 overflow-hidden">
-              <div class="card-header">Hardware / Integration</div>
-              <div id="hwCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2800" data-bs-pause="hover">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="https://picsum.photos/seed/hw1/800/500" class="d-block w-100" alt="Hardware slide 1">
-                    <div class="carousel-caption d-none d-md-block"><p class="small">Sensor bring-up</p></div>
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://picsum.photos/seed/hw2/800/500" class="d-block w-100" alt="Hardware slide 2">
-                    <div class="carousel-caption d-none d-md-block"><p class="small">Enclosure draft</p></div>
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://picsum.photos/seed/hw3/800/500" class="d-block w-100" alt="Hardware slide 3">
-                    <div class="carousel-caption d-none d-md-block"><p class="small">Integration test</p></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-lg-4">
-            <div class="card bg-transparent border border-dark-subtle rounded-4 overflow-hidden">
-              <div class="card-header">Coding</div>
-              <div id="codeCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2600" data-bs-pause="hover">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="https://picsum.photos/seed/code1/800/500" class="d-block w-100" alt="Coding slide 1">
-                    <div class="carousel-caption d-none d-md-block"><p class="small">ETL pipeline</p></div>
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://picsum.photos/seed/code2/800/500" class="d-block w-100" alt="Coding slide 2">
-                    <div class="carousel-caption d-none d-md-block"><p class="small">Features & eval</p></div>
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://picsum.photos/seed/code3/800/500" class="d-block w-100" alt="Coding slide 3">
-                    <div class="carousel-caption d-none d-md-block"><p class="small">App wiring</p></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <section id="timeline" class="section band">
-      <div class="container narrow">
-        <h3 class="mb-3">Timeline</h3>
-        <ol>
-          <li><strong>Weeks 1–2 • Kickoff &amp; Scope:</strong> define MVP signals &amp; success metrics; repos/CI; order kits.</li>
-          <li><strong>Weeks 3–5 • Foundations:</strong> sensor bring-up; ingestion/feature pipeline; pilot data round 1.</li>
-          <li><strong>Weeks 6–8 • Prototype:</strong> working prototype; model selection; integrate real data; UI stub.</li>
-          <li><strong>Weeks 9–10 • Complete:</strong> freeze config; write results; record a short demo; celebrate.</li>
-        </ol>
-      </div>
-    </section>
-    
-    <section id="team" class="section band" aria-label="Team directory">
-      <div class="container">
+        <!-- Classic filters row -->
         <div class="controls row g-2 align-items-end">
           <div class="col-12 col-md-6 col-lg">
             <label class="form-label">Search</label>
@@ -228,26 +114,167 @@
           </div>
         </div>
 
+        <!-- Groups grid -->
         <div id="groups" class="mt-3"></div>
         <p id="empty" class="empty" hidden>No people match those filters.</p>
       </div>
     </section>
 
-    <section id="contact" class="section band">
-      <div class="container narrow">
-        <h3 class="mb-3">Contact</h3>
-        <p class="lede">General inquiries: <a href="mailto:hello@alaris.ai">hello@alaris.ai</a></p>
+    <!-- PROJECT (no fit-screen) -->
+    <section id="project" class="section band flow-lg">
+      <div class="container-xl">
+        <span class="eyebrow">Project</span>
+        <h3 class="title">Snapshots</h3>
+        <hr class="divider">
+
+        <div class="row g-4">
+          <!-- BioScience -->
+          <div class="col-12 col-lg-4">
+            <div class="card card-surface rounded-4 overflow-hidden">
+              <div class="card-header">BioScience</div>
+              <div id="bioCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3200" data-bs-pause="hover">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <div class="ratio ratio-16x9">
+                      <img src="assets/carousels/bioscience-1.jpg" class="w-100 object-fit-cover" alt="Microscopy pipeline">
+                    </div>
+                    <div class="carousel-caption d-none d-md-block"><p class="small">Annotation rubric v0.2</p></div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class="ratio ratio-16x9">
+                      <img src="assets/carousels/bioscience-2.jpg" class="w-100 object-fit-cover" alt="Pilot data capture">
+                    </div>
+                    <div class="carousel-caption d-none d-md-block"><p class="small">Pilot data round 1</p></div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class="ratio ratio-16x9">
+                      <img src="assets/carousels/bioscience-3.jpg" class="w-100 object-fit-cover" alt="Quality checks">
+                    </div>
+                    <div class="carousel-caption d-none d-md-block"><p class="small">QA checks &amp; baselines</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hardware Innovation -->
+          <div class="col-12 col-lg-4">
+            <div class="card card-surface rounded-4 overflow-hidden">
+              <div class="card-header">Hardware Innovation</div>
+              <div id="hwCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <div class="ratio ratio-16x9">
+                      <img src="assets/carousels/hardware-1.jpg" class="w-100 object-fit-cover" alt="Sensor bring-up">
+                    </div>
+                    <div class="carousel-caption d-none d-md-block"><p class="small">Sensor bring-up</p></div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class="ratio ratio-16x9">
+                      <img src="assets/carousels/hardware-2.jpg" class="w-100 object-fit-cover" alt="Enclosure draft">
+                    </div>
+                    <div class="carousel-caption d-none d-md-block"><p class="small">Enclosure draft</p></div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class="ratio ratio-16x9">
+                      <img src="assets/carousels/hardware-3.jpg" class="w-100 object-fit-cover" alt="Integration test">
+                    </div>
+                    <div class="carousel-caption d-none d-md-block"><p class="small">Integration test</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Engineering -->
+          <div class="col-12 col-lg-4">
+            <div class="card card-surface rounded-4 overflow-hidden">
+              <div class="card-header">AI Engineering</div>
+              <div id="codeCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2800" data-bs-pause="hover">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <div class="ratio ratio-16x9">
+                      <img src="assets/carousels/ai-1.jpg" class="w-100 object-fit-cover" alt="ETL pipeline">
+                    </div>
+                    <div class="carousel-caption d-none d-md-block"><p class="small">ETL pipeline</p></div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class="ratio ratio-16x9">
+                      <img src="assets/carousels/ai-2.jpg" class="w-100 object-fit-cover" alt="Features &amp; eval">
+                    </div>
+                    <div class="carousel-caption d-none d-md-block"><p class="small">Features &amp; eval</p></div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class="ratio ratio-16x9">
+                      <img src="assets/carousels/ai-3.jpg" class="w-100 object-fit-cover" alt="App wiring">
+                    </div>
+                    <div class="carousel-caption d-none d-md-block"><p class="small">App wiring</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /row -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE (no fit-screen) -->
+    <section id="timeline" class="section band flow-lg">
+      <div class="container-narrow">
+        <span class="eyebrow">Timeline</span>
+        <h3 class="title">Milestones</h3>
+        <hr class="divider">
+        <ol class="timeline-rail">
+          <li><strong>Weeks 1–2 • Kickoff &amp; Scope:</strong> define Model/Structure for the AI integration Team &amp; success metrics; repos/CI; order kits.</li>
+          <li><strong>Weeks 3–5 • Foundations:</strong> sensor bring-up; ingestion/feature pipeline; pilot data round 1.</li>
+          <li><strong>Weeks 6–8 • Prototype:</strong> working prototype; model selection; integrate real data; UI stub.</li>
+          <li><strong>Weeks 9–10 • Complete:</strong> freeze config; write results; record a short demo.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CONTACT (no fit-screen) -->
+    <section id="contact" class="section band flow-lg">
+      <div class="container-narrow">
+        <span class="eyebrow">Contact</span>
+        <h3 class="title">Get in touch</h3>
+        <hr class="divider">
+        <div class="card card-surface p-3 rounded-4">
+          <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2">
+            <p class="m-0 lede">General inquiries: <a href="mailto:hello@alaris.ai">abrahamnakhal@gmail.com , kanishkm05@gmail.com , aayushroy2005@gmail.com</a></p>
+            <div class="d-flex gap-2">
+              <a class="icon-btn" href="https://www.linkedin.com/" target="_blank" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+              <a class="icon-btn" href="https://github.com/" target="_blank" aria-label="GitHub"><i class="bi bi-github"></i></a>
+              <a class="icon-btn" href="https://x.com/" target="_blank" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THANK YOU (no fit-screen) -->
+    <section id="thanks" class="section band flow-lg">
+      <div class="container-narrow">
+        <span class="eyebrow">Appreciation</span>
+        <h3 class="title">Thank you</h3>
+        <hr class="divider">
+        <p class="prose">
+          Huge thanks to our advisors, contributors, and everyone in the Alaris community who has helped shape this project —
+          from clinical guidance and data labeling to hardware bring-up, modeling, and design feedback. We appreciate you! 💙
+        </p>
       </div>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="site-footer border-top border-dark-subtle">
     <div class="container py-3 text-muted small">
-      © <span id="year"></span> ALARIS AI
+      © <span id="year"></span> Alaris
     </div>
   </footer>
 
-  <!-- Bootstrap Modal for bios (image integrity preserved) -->
+  <!-- PERSON MODAL -->
   <div class="modal fade" id="personModal" tabindex="-1" aria-hidden="true" aria-labelledby="personModalLabel">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content bg-dark-subtle border border-dark-subtle rounded-4 overflow-hidden">
@@ -275,6 +302,7 @@
     </div>
   </div>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script defer src="script.js"></script>
 </body>
