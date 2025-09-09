@@ -1,4 +1,5 @@
-// Team page with Bootstrap + modal image integrity + Abraham-first + robust section ordering
+// Team page — classic layout, Abraham-first, full bio in modal
+
 const el = {
   search: document.getElementById('search'),
   role: document.getElementById('role'),
@@ -13,10 +14,52 @@ const el = {
   modalBio: document.getElementById('modalBio'),
   modalLinks: document.getElementById('modalLinks'),
 };
-el.year.textContent = new Date().getFullYear();
+if (el.year) el.year.textContent = new Date().getFullYear();
 
 const normalize = (s='') => s.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'');
 const slug = s => normalize(s||'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+
+// Collapse whitespace + strip any accidental HTML
+function cleanText(v=''){
+  return String(v).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+// Pick the best available blurb field from a person object
+function getBlurb(p){
+  const candidates = [p.cardBlurb, p.blurb, p.bio, p.description, p.about];
+  const first = candidates.find(v => v && cleanText(v).length);
+  return first ? cleanText(first) : '';
+}
+
+
+// Normalize a section label to a stable key (handles typos & variants)
+function sectionKey(name = "") {
+  const n = normalize(name).replace(/team|the/g, "").trim();
+  if (/advisor/.test(n)) return "advisors";
+  if (/co[-\s]*founder/.test(n)) return "co-founders";
+  if (/founder/.test(n)) return "founder";
+  if (/bio|bioscience|biology/.test(n)) return "bioscience";
+  if (/hardware|integration|innov/.test(n)) return "hardware";
+  if (/ai|engineering|coding|software/.test(n)) return "ai-engineering";
+  if (/member/.test(n)) return "members";
+  return "other";
+}
+
+// Desired section order (lower is earlier)
+const SECTION_WEIGHT = {
+  "advisors": 0,
+  "founder": 1,
+  "co-founders": 2,
+  "bioscience": 3,
+  "hardware": 4,
+  "ai-engineering": 5,
+  "members": 6,
+  "other": 9
+};
+
+function sectionOrder(name) {
+  return SECTION_WEIGHT[sectionKey(name)] ?? 9;
+}
 
 function shortText(text, max=160){
   if(!text) return '';
@@ -58,82 +101,58 @@ async function load(){
 }
 
 function populateRoleFilter(data){
-  const roles = Array.from(new Set(data.map(p => p.role).filter(Boolean)))
-    .sort((a,b)=>a.localeCompare(b));
-  el.role.innerHTML = '<option value="">All roles</option>' +
-    roles.map(r=>`<option value="${r}">${r}</option>`).join('');
+  const roles = Array.from(new Set(data.map(p => p.role).filter(Boolean))).sort((a,b)=>a.localeCompare(b));
+  role.innerHTML = '<option value="">All roles</option>' + roles.map(r=>`<option value="${r}">${r}</option>`).join('');
 }
 
 function personCard(p){
-  const imgSrc = p.image || `https://placehold.co/300x300/png?text=${encodeURIComponent(p.name.split(' ')[0]||'Member')}`;
+  const imgSrc = p.image || `https://placehold.co/300x300/png?text=${encodeURIComponent((p.name||'Member').split(' ')[0])}`;
   const tagsHtml = (p.tags||[]).map(t => `<span class="tag">${t}</span>`).join('');
   const links = p.links || {};
   const link = (label, href) => href ? `<a class="btn btn-sm btn-outline-light" href="${href}" target="_blank" rel="noopener" aria-label="${label}">${label}</a>` : '';
+
+  const blurb = getBlurb(p); // NEW
+
   return `
     <article class="person-card h-100" tabindex="0" data-person-id="${p.id}">
       <div class="avatar-wrap">
         <img class="avatar" loading="lazy" decoding="async" src="${imgSrc}" alt="${p.name}'s headshot"
-          onerror="this.onerror=null; this.src='https://placehold.co/300x300?text=${encodeURIComponent(p.name.split(' ')[0]||'Member')}';">
+          onerror="this.onerror=null; this.src='https://placehold.co/300x300?text=${encodeURIComponent((p.name||'Member').split(' ')[0])}';">
       </div>
       <h4 class="name">${p.name}</h4>
       <p class="role">${[p.role, p.trackOrDept, p.year].filter(Boolean).join(' • ')}</p>
-      <p class="blurb">${p.blurb ?? shortText(p.bio, 120)}</p>
+
+      ${ blurb
+          ? `<p class="blurb">${shortText(blurb, 160)}</p>`
+          // or use the next line if you want a visible placeholder:
+          // : `<p class="blurb text-muted">Bio coming soon.</p>`
+          : ''
+      }
+
       <div class="tags">${tagsHtml}</div>
-      <div class="links">${link('Website', links.website)}${link('GitHub', links.github)}${link('LinkedIn', links.linkedin)}${link('Email', links.email ? 'mailto:'+links.email : '')}</div>
+      <div class="links">
+        ${link('Website', links.website)}
+        ${link('GitHub', links.github)}
+        ${link('LinkedIn', links.linkedin)}
+        ${link('Email', links.email ? 'mailto:'+links.email : '')}
+      </div>
     </article>
   `;
 }
 
-// --- canonicalize section names (handles typos, plurals, hyphens, etc.)
-const canonicalSection = (name='') => {
-  const key = name.toLowerCase()
-    .replace(/[–—]/g,'-')  // normalize dashes
-    .replace(/\s+/g,' ')   // collapse spaces
-    .trim();
-  const map = new Map([
-    ['advisors','Advisors'], ['advisor','Advisors'],
-    ['founder','Founder'],
-    ['co-founder','Co-Founder'], ['co-founders','Co-Founder'], ['co founders','Co-Founder'],
-    ['cofounder','Co-Founder'], ['co-founder(s)','Co-Founder'],
-    ['leadership','Leadership'],
-    ['bioscience team','BioScience Team'], ['bio science team','BioScience Team'],
-    ['hardware innovation team','Hardware Innovation Team'],
-    ['hardware inovation team','Hardware Innovation Team'], // common typo
-    ['ai engineering team','AI Engineering Team'],
-    ['members','Members']
-  ]);
-  return map.get(key) || name || 'Members';
-};
-
-// exact top-to-bottom section order
-const SECTION_ORDER = [
-  'Advisors',
-  'Founder',
-  'Co-Founder',
-  'BioScience Team',
-  'Hardware Innovation Team',
-  'AI Engineering Team',
-  'Leadership',   // include if you still use it
-  'Members'
-];
-
-const orderMap  = new Map(SECTION_ORDER.map((n,i)=>[n.toLowerCase(), i]));
-const sectionRank = s => orderMap.get((s||'').toLowerCase()) ?? 999;
 
 function render(){
   const q = normalize(el.search.value);
   const roleVal = el.role.value;
   const sort = el.sort.value || 'name-asc';
 
-  // filter
   let list = PEOPLE.filter(p => {
-    const hay = normalize([p.name, p.role, p.trackOrDept, (p.tags||[]).join(' '), p.blurb||'', p.bio||''].join(' '));
+    const hay = normalize([p.name, p.role, p.trackOrDept, (p.tags||[]).join(' '), p.bio||''].join(' '));
     const roleOk = !roleVal || p.role === roleVal;
     const qOk = !q || hay.includes(q);
     return roleOk && qOk;
   });
 
-  // sort alpha / role
   list.sort((a,b)=>{
     const cmp = (x,y)=>(x||'').localeCompare(y||'');
     switch(sort){
@@ -144,42 +163,40 @@ function render(){
     }
   });
 
-  // group by canonical section
   const groups = {};
-  for(const p of list){
-    const sec = canonicalSection(p.section || 'Members');
-    (groups[sec] ||= []).push(p);
+  for(const p of list){ (groups[p.section||'Members'] ||= []).push(p); }
+
+  // Abraham-first within Founder
+  if(groups['Founder']){
+    const i = groups['Founder'].findIndex(p => /abraham\s+nakhal/i.test(p.name));
+    if(i > -1){
+      const [ab] = groups['Founder'].splice(i,1);
+      groups['Founder'].unshift(ab);
+    }
   }
 
-  // Pin Abraham to the front (Founder + Leadership fallback)
-  const pinFirst = (arr, test) => {
-    if (!arr) return;
-    const i = arr.findIndex(test);
-    if (i > 0) { const [x] = arr.splice(i,1); arr.unshift(x); }
-  };
-  pinFirst(groups['Founder'],    p => /abraham\s+nakhal/i.test(p.name));
-  pinFirst(groups['Leadership'], p => /abraham\s+nakhal/i.test(p.name));
-
-  // stable order; unknown sections go after, alphabetical
+  const SECTION_ORDER = ["Advisors","Founder","Co-Founders","BioScience Team","Hardware Inovation Team","AI Engineering Team","Members"];
   const ordered = Object.entries(groups).sort(([a],[b]) => {
-    const ra = sectionRank(a), rb = sectionRank(b);
-    return (ra - rb) || a.localeCompare(b);
-  });
+  const aw = sectionOrder(a);
+  const bw = sectionOrder(b);
+  return aw === bw ? a.localeCompare(b) : aw - bw;
+});
 
-  // render
   el.groups.innerHTML = ordered.map(([name, people])=>{
-    return `<section class="mb-4"><h4 class="mb-3">${name}</h4>
-      <div class="row g-3">${
-        people.map(p => `<div class="col-12 col-sm-6 col-md-4 col-lg-3">${personCard(p)}</div>`).join('')
-      }</div></section>`;
+    return `<section class="mb-4">
+      <h4 class="mb-3">${name}</h4>
+      <div class="row g-3">
+        ${people.map(p => `<div class="col-12 col-sm-6 col-md-4 col-lg-3">${personCard(p)}</div>`).join('')}
+      </div>
+    </section>`;
   }).join('');
 
   el.empty.hidden = list.length !== 0;
 }
 
-// Modal
+// Modal population
 function openModal(person){
-  const img = person.image || `https://placehold.co/600x600/png?text=${encodeURIComponent(person.name.split(' ')[0]||'Member')}`;
+  const img = person.image || `https://placehold.co/600x600/png?text=${encodeURIComponent((person.name||'Member').split(' ')[0])}`;
   el.modalAvatar.src = img;
   el.modalAvatar.alt = `${person.name}'s headshot`;
   el.modalName.textContent = person.name;
@@ -187,13 +204,18 @@ function openModal(person){
   el.modalBio.textContent = person.bio || 'No bio yet.';
   const L = person.links || {};
   const link = (label, href) => href ? `<a class="btn btn-sm btn-outline-light" href="${href}" target="_blank" rel="noopener" aria-label="${label}">${label}</a>` : '';
-  el.modalLinks.innerHTML = [link('Website', L.website), link('GitHub', L.github), link('LinkedIn', L.linkedin), link('Email', L.email ? 'mailto:'+L.email : '')].join('');
+  el.modalLinks.innerHTML = [
+    link('Website', L.website),
+    link('GitHub', L.github),
+    link('LinkedIn', L.linkedin),
+    link('Email', L.email ? 'mailto:'+L.email : '')
+  ].join('');
 
   const modal = bootstrap.Modal.getOrCreateInstance(el.modalEl);
   modal.show();
 }
 
-// interactions
+// Events: open modal from card
 el.groups.addEventListener('click', e => {
   const card = e.target.closest('.person-card'); if(!card) return;
   const id = card.getAttribute('data-person-id');
@@ -209,10 +231,12 @@ el.groups.addEventListener('keydown', e => {
   }
 });
 
+// Filters: re-render on input/change
 ['input','change'].forEach(evt => {
   el.search.addEventListener(evt, render);
   el.role.addEventListener(evt, render);
   el.sort.addEventListener(evt, render);
 });
 
+// Go
 load();
