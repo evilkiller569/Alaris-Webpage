@@ -21,13 +21,11 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          action: "upload"
-          # Your site is just HTML/CSS/JS at repo root:
-          app_location: "/"
-          api_location: ""
-          # No build step; just upload the files that are already there:
-          output_location: "/"
-          skip_app_build: true
+          action: upload
+          app_location: "/"     # your index.html is at repo root
+          api_location: ""      # no API
+          output_location: "/"  # just upload root files
+          skip_app_build: true  # no build needed
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -37,4 +35,4 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          action: "close"
+          action: close
