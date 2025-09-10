@@ -14,16 +14,16 @@ jobs:
     permissions:
       id-token: write
       contents: read
+
     steps:
       - uses: actions/checkout@v4
 
-      # Debug: show files in repo root
+      # Debug
       - name: List files (debug)
         run: |
           pwd
           ls -la
 
-      # Debug: check if secret is available
       - name: Check token is present (debug)
         run: |
           if [ -z "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}" ]; then
@@ -32,15 +32,15 @@ jobs:
             echo "✅ Secret found (value is masked)";
           fi
 
-      - name: Build And Deploy
+      # Deploy prebuilt static files from repo root
+      - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           action: upload
-          app_location: ""        # repo root
-          api_location: ""        # no API
-          output_location: ""     # upload root folder
-          skip_app_build: true    # no build, just upload
+          app_location: "/"              # your site lives at repo root
+          app_artifact_location: "."     # upload the files as-is (no build)
+          skip_app_build: true
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
