@@ -17,29 +17,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # DEBUG: show what's actually in the repo root after checkout
-      - name: List files
+      # Debug step just to prove the files are there
+      - name: List files (debug)
         run: |
           pwd
           ls -la
+
+      # Optional: quick check that the secret is visible to the runner
+      - name: Check token is present (debug)
+        run: |
+          if [ -z "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}" ]; then
+            echo "❌ Missing AZURE_STATIC_WEB_APPS_API_TOKEN secret"; exit 1;
+          else
+            echo "✅ Secret found (value is masked)";
+          fi
 
       - name: Build And Deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           action: upload
-          # Use empty strings for root to avoid "/" path weirdness:
-          app_location: ""        # repo root
+          app_location: ""        # repo root (your index.html is here)
           api_location: ""        # no API
-          output_location: ""     # upload the same folder as app_location
-          skip_app_build: true    # don't build, just upload
-
-  close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Close Pull Request Environment
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          action: close
+          output_location: ""     # upload same folder as app_location
+          skip_app_build: true    # just upload the files—n
